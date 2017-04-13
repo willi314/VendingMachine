@@ -20,10 +20,21 @@ namespace PillarVendingMachine
 
         public void insertCoin(string coinString)
         {
-            if (coinString.ToLower().Equals("quarter"))
-                insertedCurrencyCount += 0.25;
-            else
-                insertedCurrencyCount += 0.10;
+            switch(coinString.ToLower())
+            {
+                case "quarter":
+                    insertedCurrencyCount += 0.25;
+                    break;
+                case "dime":
+                    insertedCurrencyCount += 0.1;
+                    break;
+                case "nickel":
+                    insertedCurrencyCount += 0.05;
+                    break;
+                default:
+                    insertedCurrencyCount += 0.0;
+                    break;
+            }
         }
     }
 }

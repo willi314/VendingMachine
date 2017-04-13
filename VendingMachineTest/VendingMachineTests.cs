@@ -33,5 +33,12 @@ namespace PillarVendingMachineTests
             vendingMachine.insertCoin("Dime");
             Assert.AreEqual("0.10", vendingMachine.checkDisplay());
         }
+
+        [TestMethod]
+        public void DisplayShowsCurrencyCountAfterInsertingNickel()
+        {
+            vendingMachine.insertCoin("Nickel");
+            Assert.AreEqual("0.05", vendingMachine.checkDisplay());
+        }
     }
 }
