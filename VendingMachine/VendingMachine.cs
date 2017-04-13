@@ -5,17 +5,25 @@ namespace PillarVendingMachine
     public class VendingMachine
     {
         private double insertedCurrencyCount;
+        private string nextMesasgeForDisplay;
 
         public VendingMachine()
         {
             insertedCurrencyCount = 0;
+            nextMesasgeForDisplay = "";
         }
 
         public string checkDisplay()
         {
+            if(!nextMesasgeForDisplay.Equals(""))
+            {
+                string displayMessage = nextMesasgeForDisplay;
+                nextMesasgeForDisplay = "";
+                return displayMessage;
+            }
             if(insertedCurrencyCount == 0)
                 return "INSERT COIN";
-            return insertedCurrencyCount.ToString("##0.00");
+            return insertedCurrencyCount.ToString("$##0.00");
         }
 
         public void insertCoin(string coinString)
@@ -35,6 +43,11 @@ namespace PillarVendingMachine
                     insertedCurrencyCount += 0.0;
                     break;
             }
+        }
+
+        public void selectCola()
+        {
+            nextMesasgeForDisplay = "PRICE: $1.00";
         }
     }
 }

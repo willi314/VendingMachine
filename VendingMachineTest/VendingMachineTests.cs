@@ -24,21 +24,28 @@ namespace PillarVendingMachineTests
         public void DisplayShowsCurrencyCountAfterInsertingQuarter()
         {
             vendingMachine.insertCoin("Quarter");
-            Assert.AreEqual("0.25", vendingMachine.checkDisplay());
+            Assert.AreEqual("$0.25", vendingMachine.checkDisplay());
         }
 
         [TestMethod]
         public void DisplayShowsCurrencyCountAfterInsertingDime()
         {
             vendingMachine.insertCoin("Dime");
-            Assert.AreEqual("0.10", vendingMachine.checkDisplay());
+            Assert.AreEqual("$0.10", vendingMachine.checkDisplay());
         }
 
         [TestMethod]
         public void DisplayShowsCurrencyCountAfterInsertingNickel()
         {
             vendingMachine.insertCoin("Nickel");
-            Assert.AreEqual("0.05", vendingMachine.checkDisplay());
+            Assert.AreEqual("$0.05", vendingMachine.checkDisplay());
+        }
+
+        [TestMethod]
+        public void DisplayShowsPriceOfItemWhenNoMoneyIsInsertedAndItemIsSelected()
+        {
+            vendingMachine.selectCola();
+            Assert.AreEqual("PRICE: $1.00", vendingMachine.checkDisplay());
         }
     }
 }
