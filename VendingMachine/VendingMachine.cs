@@ -15,12 +15,15 @@ namespace PillarVendingMachine
         {
             if(insertedCurrencyCount == 0)
                 return "INSERT COIN";
-            return "" + insertedCurrencyCount;
+            return insertedCurrencyCount.ToString("##0.00");
         }
 
         public void insertCoin(string coinString)
         {
-            insertedCurrencyCount += 0.25;
+            if (coinString.ToLower().Equals("quarter"))
+                insertedCurrencyCount += 0.25;
+            else
+                insertedCurrencyCount += 0.10;
         }
     }
 }
