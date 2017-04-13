@@ -13,5 +13,13 @@ namespace PillarVendingMachineTests
             VendingMachine vendingMachine = new VendingMachine();
             Assert.AreEqual(vendingMachine.checkDisplay(), "INSERT COIN");
         }
+
+        [TestMethod]
+        public void CheckDisplayAfterInsertingQuarter()
+        {
+            VendingMachine vendingMachine = new VendingMachine();
+            vendingMachine.insertCoin("Quarter");
+            Assert.AreEqual(vendingMachine.checkDisplay(), "0.25");
+        }
     }
 }
