@@ -47,17 +47,35 @@ namespace PillarVendingMachine
 
         public void selectCola()
         {
-            nextMesasgeForDisplay = "PRICE: $1.00";
+            if(insertedCurrencyCount < 1.0)
+            {
+                nextMesasgeForDisplay = "PRICE: $1.00";
+                return;
+            }
+            nextMesasgeForDisplay = "THANK YOU";
+            insertedCurrencyCount = 0.0;
         }
 
         public void selectChips()
         {
-            nextMesasgeForDisplay = "PRICE: $0.50";
+            if (insertedCurrencyCount < 0.5)
+            {
+                nextMesasgeForDisplay = "PRICE: $0.50";
+                return;
+            }
+            nextMesasgeForDisplay = "THANK YOU";
+            insertedCurrencyCount = 0.0;
         }
 
         public void selectCandy()
         {
-            nextMesasgeForDisplay = "PRICE: $0.65";
+            if(insertedCurrencyCount < 0.5)
+            {
+                nextMesasgeForDisplay = "PRICE: $0.65";
+                return;
+            } 
+            nextMesasgeForDisplay = "THANK YOU";
+            insertedCurrencyCount = 0.0;
         }
     }
 }
