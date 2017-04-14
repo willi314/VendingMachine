@@ -6,11 +6,13 @@ namespace PillarVendingMachine
     {
         private double insertedCurrencyCount;
         private string nextMesasgeForDisplay;
+        private int[] coinsInCoinReturn;
 
         public VendingMachine()
         {
             insertedCurrencyCount = 0;
             nextMesasgeForDisplay = "";
+            coinsInCoinReturn = new int[]{0,0,0};
         }
 
         public string checkDisplay()
@@ -53,6 +55,7 @@ namespace PillarVendingMachine
                 return;
             }
             nextMesasgeForDisplay = "THANK YOU";
+            returnCoins(insertedCurrencyCount - 1.0);
             insertedCurrencyCount = 0.0;
         }
 
@@ -64,6 +67,7 @@ namespace PillarVendingMachine
                 return;
             }
             nextMesasgeForDisplay = "THANK YOU";
+            returnCoins(insertedCurrencyCount - 0.5);
             insertedCurrencyCount = 0.0;
         }
 
@@ -75,7 +79,36 @@ namespace PillarVendingMachine
                 return;
             } 
             nextMesasgeForDisplay = "THANK YOU";
+            returnCoins(insertedCurrencyCount - 0.65);
             insertedCurrencyCount = 0.0;
+        }
+
+        private void returnCoins(double differenceFromTransaction)
+        {
+            while(differenceFromTransaction >= 0.25)
+            {
+                coinsInCoinReturn[0]++;
+                differenceFromTransaction = Math.Round(differenceFromTransaction - 0.25, 2);
+            }
+            while (differenceFromTransaction >= 0.1)
+            {
+                coinsInCoinReturn[1]++;
+                differenceFromTransaction = Math.Round(differenceFromTransaction - 0.1, 2);
+            }
+            while (differenceFromTransaction >= 0.05)
+            {
+                coinsInCoinReturn[2]++;
+                differenceFromTransaction = Math.Round(differenceFromTransaction - 0.05, 2);
+            }
+        }
+
+        public string checkCoinReturn()
+        {
+            if (coinsInCoinReturn[0] == 0 && coinsInCoinReturn[1] == 0 && coinsInCoinReturn[2] == 0)
+                return "Coin return is empty";
+            string coinReturnString = string.Format("Retrieved {0} quarters, {1} dimes, and {2} nickels", coinsInCoinReturn[0], coinsInCoinReturn[1],coinsInCoinReturn[2]);
+            Array.Clear(coinsInCoinReturn, 0, 3);
+            return coinReturnString;
         }
     }
 }

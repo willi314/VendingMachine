@@ -57,6 +57,8 @@ namespace PillarVendingMachineTests
         public void DisplayShowsThankYouAfterColaPurchaseAndBalanceReturnsToZero()
         {
             vendingMachine.insertCoin("QUARTER");
+            vendingMachine.selectCola();
+            Assert.AreEqual("PRICE: $1.00", vendingMachine.checkDisplay());
             vendingMachine.insertCoin("quarter");
             vendingMachine.insertCoin("QuArTeR");
             vendingMachine.insertCoin("qUaRtEr");
@@ -85,6 +87,20 @@ namespace PillarVendingMachineTests
             vendingMachine.selectCandy();
             Assert.AreEqual("THANK YOU", vendingMachine.checkDisplay());
             Assert.AreEqual("INSERT COIN", vendingMachine.checkDisplay());
+        }
+
+        [TestMethod]
+        public void MachineReturnsCorrectChangeWhenAnItemCostsLessThanTheInsertedChange()
+        {
+            Assert.AreEqual("Coin return is empty", vendingMachine.checkCoinReturn());
+            vendingMachine.insertCoin("QUARTER");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("QuArTeR");
+            vendingMachine.insertCoin("qUaRtEr");
+            vendingMachine.insertCoin("qUaRtEr");
+            vendingMachine.selectCandy();
+            Assert.AreEqual("Retrieved 2 quarters, 1 dimes, and 0 nickels", vendingMachine.checkCoinReturn());
+            Assert.AreEqual("Coin return is empty", vendingMachine.checkCoinReturn());
         }
     }
 }
