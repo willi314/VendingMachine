@@ -49,5 +49,15 @@ namespace PillarVendingMachine
         {
             nextMesasgeForDisplay = "PRICE: $1.00";
         }
+
+        public void selectChips()
+        {
+            nextMesasgeForDisplay = "PRICE: $0.50";
+        }
+
+        public void selectCandy()
+        {
+            nextMesasgeForDisplay = "PRICE: $0.65";
+        }
     }
 }

@@ -46,6 +46,11 @@ namespace PillarVendingMachineTests
         {
             vendingMachine.selectCola();
             Assert.AreEqual("PRICE: $1.00", vendingMachine.checkDisplay());
+            vendingMachine.selectChips();
+            Assert.AreEqual("PRICE: $0.50", vendingMachine.checkDisplay());
+            vendingMachine.selectCandy();
+            Assert.AreEqual("PRICE: $0.65", vendingMachine.checkDisplay());
+            Assert.AreEqual("INSERT COIN", vendingMachine.checkDisplay());
         }
     }
 }
