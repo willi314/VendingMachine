@@ -12,7 +12,7 @@ namespace PillarVendingMachineTests
         [TestInitialize()]
         public void Initialize()
         {
-            vendingMachine = new VendingMachine();
+            vendingMachine = new VendingMachine(1, 1, 1);
         }
         [TestMethod]
         public void InitialDisplayShowsInsertCoin()
@@ -101,6 +101,31 @@ namespace PillarVendingMachineTests
             vendingMachine.selectCandy();
             Assert.AreEqual("Retrieved 2 quarters, 1 dimes, and 0 nickels", vendingMachine.checkCoinReturn());
             Assert.AreEqual("Coin return is empty", vendingMachine.checkCoinReturn());
+        }
+
+        [TestMethod]
+        public void DisplayShowsSoldOutWhenItemThatIsOutOfStockIsSelected()
+        {
+            vendingMachine.insertCoin("QUARTER");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.selectChips();
+            Assert.AreEqual("THANK YOU", vendingMachine.checkDisplay());
+            vendingMachine.selectChips();
+            Assert.AreEqual("SOLD OUT", vendingMachine.checkDisplay());
+            vendingMachine.insertCoin("QUARTER");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("QUARTER");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.selectCola();
+            vendingMachine.selectCola();
+            Assert.AreEqual("SOLD OUT", vendingMachine.checkDisplay());
+            vendingMachine.insertCoin("QUARTER");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.selectCandy();
+            vendingMachine.selectCandy();
+            Assert.AreEqual("SOLD OUT", vendingMachine.checkDisplay());
+            Assert.AreEqual("INSERT COIN", vendingMachine.checkDisplay());
         }
     }
 }

@@ -7,12 +7,22 @@ namespace PillarVendingMachine
         private double insertedCurrencyCount;
         private string nextMesasgeForDisplay;
         private int[] coinsInCoinReturn;
+        private int[] itemsInStock;
 
         public VendingMachine()
         {
             insertedCurrencyCount = 0;
             nextMesasgeForDisplay = "";
-            coinsInCoinReturn = new int[]{0,0,0};
+            coinsInCoinReturn = new int[]{ 0, 0, 0 };
+            itemsInStock = new int[]{ 0, 0, 0 };
+        }
+
+        public VendingMachine(int amountOfCola, int amountOfChips, int amountOfCandy)
+        {
+            insertedCurrencyCount = 0;
+            nextMesasgeForDisplay = "";
+            coinsInCoinReturn = new int[] { 0, 0, 0 };
+            itemsInStock = new int[] { amountOfCola, amountOfChips, amountOfCandy };
         }
 
         public string checkDisplay()
@@ -49,11 +59,19 @@ namespace PillarVendingMachine
 
         public void selectCola()
         {
+            if(itemsInStock[0] == 0)
+            {
+                nextMesasgeForDisplay = "SOLD OUT";
+                return;
+            }
+
             if(insertedCurrencyCount < 1.0)
             {
                 nextMesasgeForDisplay = "PRICE: $1.00";
                 return;
             }
+
+            itemsInStock[0]--;
             nextMesasgeForDisplay = "THANK YOU";
             returnCoins(insertedCurrencyCount - 1.0);
             insertedCurrencyCount = 0.0;
@@ -61,11 +79,19 @@ namespace PillarVendingMachine
 
         public void selectChips()
         {
+            if (itemsInStock[1] == 0)
+            {
+                nextMesasgeForDisplay = "SOLD OUT";
+                return;
+            }
+
             if (insertedCurrencyCount < 0.5)
             {
                 nextMesasgeForDisplay = "PRICE: $0.50";
                 return;
             }
+
+            itemsInStock[1]--;
             nextMesasgeForDisplay = "THANK YOU";
             returnCoins(insertedCurrencyCount - 0.5);
             insertedCurrencyCount = 0.0;
@@ -73,11 +99,19 @@ namespace PillarVendingMachine
 
         public void selectCandy()
         {
-            if(insertedCurrencyCount < 0.5)
+            if (itemsInStock[2] == 0)
+            {
+                nextMesasgeForDisplay = "SOLD OUT";
+                return;
+            }
+
+            if (insertedCurrencyCount < 0.5)
             {
                 nextMesasgeForDisplay = "PRICE: $0.65";
                 return;
-            } 
+            }
+
+            itemsInStock[2]--;
             nextMesasgeForDisplay = "THANK YOU";
             returnCoins(insertedCurrencyCount - 0.65);
             insertedCurrencyCount = 0.0;
