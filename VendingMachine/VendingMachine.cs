@@ -8,11 +8,13 @@ namespace PillarVendingMachine
         private string nextMesasgeForDisplay;
         private int[] coinsInCoinReturn;
         private int[] itemsInStock;
+        private string invalidObjectsInCoinReturn;
 
         public VendingMachine()
         {
             insertedCurrencyCount = 0;
             nextMesasgeForDisplay = "";
+            invalidObjectsInCoinReturn = "";
             coinsInCoinReturn = new int[]{ 0, 0, 0 };
             itemsInStock = new int[]{ 0, 0, 0 };
         }
@@ -21,6 +23,7 @@ namespace PillarVendingMachine
         {
             insertedCurrencyCount = 0;
             nextMesasgeForDisplay = "";
+            invalidObjectsInCoinReturn = "";
             coinsInCoinReturn = new int[] { 0, 0, 0 };
             itemsInStock = new int[] { amountOfCola, amountOfChips, amountOfCandy };
         }
@@ -53,6 +56,15 @@ namespace PillarVendingMachine
                     break;
                 default:
                     insertedCurrencyCount += 0.0;
+                    if (!String.IsNullOrWhiteSpace(coinString))
+                    {
+                        if (String.IsNullOrEmpty(invalidObjectsInCoinReturn))
+                        {
+                            invalidObjectsInCoinReturn = "a " + coinString;
+                            break;
+                        }
+                        invalidObjectsInCoinReturn += ", a " + coinString;
+                    }
                     break;
             }
         }
@@ -138,10 +150,20 @@ namespace PillarVendingMachine
 
         public string checkCoinReturn()
         {
+            string coinReturnString;
             if (coinsInCoinReturn[0] == 0 && coinsInCoinReturn[1] == 0 && coinsInCoinReturn[2] == 0)
-                return "Coin return is empty";
-            string coinReturnString = string.Format("Retrieved {0} quarters, {1} dimes, and {2} nickels", coinsInCoinReturn[0], coinsInCoinReturn[1],coinsInCoinReturn[2]);
+            {
+                if (String.IsNullOrEmpty(invalidObjectsInCoinReturn))
+                    return "Coin return is empty";
+                else
+                    coinReturnString = "Retrieved " + invalidObjectsInCoinReturn;
+            }
+            else if (!String.IsNullOrEmpty(invalidObjectsInCoinReturn))
+                coinReturnString = string.Format("Retrieved {0}, {1} quarters, {2} dimes, and {3} nickels", invalidObjectsInCoinReturn, coinsInCoinReturn[0], coinsInCoinReturn[1],coinsInCoinReturn[2]);
+            else
+                coinReturnString = string.Format("Retrieved {0} quarters, {1} dimes, and {2} nickels", coinsInCoinReturn[0], coinsInCoinReturn[1], coinsInCoinReturn[2]);
             Array.Clear(coinsInCoinReturn, 0, 3);
+            invalidObjectsInCoinReturn = "";
             return coinReturnString;
         }
     }

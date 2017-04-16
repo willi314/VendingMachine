@@ -127,5 +127,18 @@ namespace PillarVendingMachineTests
             Assert.AreEqual("SOLD OUT", vendingMachine.checkDisplay());
             Assert.AreEqual("INSERT COIN", vendingMachine.checkDisplay());
         }
+
+        [TestMethod]
+        public void MachinePutsInvalidObjectsIntoCoinReturn()
+        {
+            vendingMachine.insertCoin("penny");
+            Assert.AreEqual("Retrieved a penny", vendingMachine.checkCoinReturn());
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.selectChips();
+            vendingMachine.insertCoin("penny");
+            Assert.AreEqual("Retrieved a penny, 1 quarters, 0 dimes, and 0 nickels", vendingMachine.checkCoinReturn());
+        }
     }
 }
