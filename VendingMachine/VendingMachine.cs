@@ -9,6 +9,7 @@ namespace PillarVendingMachine
         private int[] coinsInCoinReturn;
         private int[] itemsInStock;
         private string invalidObjectsInCoinReturn;
+        private int[] coinsInMachine;
 
         public VendingMachine()
         {
@@ -17,6 +18,7 @@ namespace PillarVendingMachine
             invalidObjectsInCoinReturn = "";
             coinsInCoinReturn = new int[]{ 0, 0, 0 };
             itemsInStock = new int[]{ 0, 0, 0 };
+            coinsInMachine = new int[] { 0, 0, 0 };
         }
 
         public VendingMachine(int amountOfCola, int amountOfChips, int amountOfCandy)
@@ -26,6 +28,17 @@ namespace PillarVendingMachine
             invalidObjectsInCoinReturn = "";
             coinsInCoinReturn = new int[] { 0, 0, 0 };
             itemsInStock = new int[] { amountOfCola, amountOfChips, amountOfCandy };
+            coinsInMachine = new int[] { 0, 0, 0 };
+        }
+
+        public VendingMachine(int amountOfCola, int amountOfChips, int amountOfCandy, int amountOfQuarters, int amountOfDimes, int amountOfNickels)
+        {
+            insertedCurrencyCount = 0;
+            nextMesasgeForDisplay = "";
+            invalidObjectsInCoinReturn = "";
+            coinsInCoinReturn = new int[] { 0, 0, 0 };
+            itemsInStock = new int[] { amountOfCola, amountOfChips, amountOfCandy };
+            coinsInMachine = new int[] { amountOfQuarters, amountOfDimes, amountOfNickels };
         }
 
         public string checkDisplay()
@@ -37,7 +50,12 @@ namespace PillarVendingMachine
                 return displayMessage;
             }
             if(insertedCurrencyCount == 0)
+            {
+                if (coinsInMachine[1] == 0 && coinsInMachine[2] == 0)
+                    return "EXACT CHANGE ONLY";
                 return "INSERT COIN";
+            }
+                
             return insertedCurrencyCount.ToString("$##0.00");
         }
 
@@ -46,12 +64,15 @@ namespace PillarVendingMachine
             switch(coinString.ToLower())
             {
                 case "quarter":
+                    coinsInMachine[0]++;
                     insertedCurrencyCount += 0.25;
                     break;
                 case "dime":
+                    coinsInMachine[1]++;
                     insertedCurrencyCount += 0.1;
                     break;
                 case "nickel":
+                    coinsInMachine[2]++;
                     insertedCurrencyCount += 0.05;
                     break;
                 default:
@@ -85,7 +106,7 @@ namespace PillarVendingMachine
 
             itemsInStock[0]--;
             nextMesasgeForDisplay = "THANK YOU";
-            returnCoins(insertedCurrencyCount - 1.0);
+            returnCoins(Math.Round(insertedCurrencyCount - 1.0, 2));
             insertedCurrencyCount = 0.0;
         }
 
@@ -105,7 +126,7 @@ namespace PillarVendingMachine
 
             itemsInStock[1]--;
             nextMesasgeForDisplay = "THANK YOU";
-            returnCoins(insertedCurrencyCount - 0.5);
+            returnCoins(Math.Round(insertedCurrencyCount - 0.5, 2));
             insertedCurrencyCount = 0.0;
         }
 
@@ -125,25 +146,28 @@ namespace PillarVendingMachine
 
             itemsInStock[2]--;
             nextMesasgeForDisplay = "THANK YOU";
-            returnCoins(insertedCurrencyCount - 0.65);
+            returnCoins(Math.Round(insertedCurrencyCount - 0.65, 2));
             insertedCurrencyCount = 0.0;
         }
 
         private void returnCoins(double differenceFromTransaction)
         {
-            while(differenceFromTransaction >= 0.25)
+            while(differenceFromTransaction >= 0.25 && coinsInMachine[0] > 0)
             {
                 coinsInCoinReturn[0]++;
+                coinsInMachine[0]--;
                 differenceFromTransaction = Math.Round(differenceFromTransaction - 0.25, 2);
             }
-            while (differenceFromTransaction >= 0.1)
+            while (differenceFromTransaction >= 0.1 && coinsInMachine[1] > 0)
             {
                 coinsInCoinReturn[1]++;
+                coinsInMachine[1]--;
                 differenceFromTransaction = Math.Round(differenceFromTransaction - 0.1, 2);
             }
-            while (differenceFromTransaction >= 0.05)
+            while (differenceFromTransaction >= 0.05 && coinsInMachine[2] > 0)
             {
                 coinsInCoinReturn[2]++;
+                coinsInMachine[2]--;
                 differenceFromTransaction = Math.Round(differenceFromTransaction - 0.05, 2);
             }
         }

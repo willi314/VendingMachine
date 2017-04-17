@@ -12,7 +12,7 @@ namespace PillarVendingMachineTests
         [TestInitialize()]
         public void Initialize()
         {
-            vendingMachine = new VendingMachine(1, 1, 1);
+            vendingMachine = new VendingMachine(1, 1, 1, 5, 5, 5);
         }
         [TestMethod]
         public void InitialDisplayShowsInsertCoin()
@@ -139,6 +139,30 @@ namespace PillarVendingMachineTests
             vendingMachine.selectChips();
             vendingMachine.insertCoin("penny");
             Assert.AreEqual("Retrieved a penny, 1 quarters, 0 dimes, and 0 nickels", vendingMachine.checkCoinReturn());
+        }
+
+        [TestMethod]
+        public void MachineDisplaysExactChangeOnlyWhenItCantMakeChangeForAnyOfTheItemsItSells()
+        {
+            vendingMachine = new VendingMachine();
+            Assert.AreEqual("EXACT CHANGE ONLY", vendingMachine.checkDisplay());
+            vendingMachine = new VendingMachine(3, 3, 3, 0, 0, 1);
+            Assert.AreEqual("INSERT COIN", vendingMachine.checkDisplay());
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("dime");
+            vendingMachine.insertCoin("dime");
+            vendingMachine.selectCandy();
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.selectCandy();
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.selectCandy();
+            Assert.AreEqual("THANK YOU", vendingMachine.checkDisplay());
+            Assert.AreEqual("EXACT CHANGE ONLY", vendingMachine.checkDisplay());
         }
     }
 }
