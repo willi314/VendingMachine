@@ -164,5 +164,15 @@ namespace PillarVendingMachineTests
             Assert.AreEqual("THANK YOU", vendingMachine.checkDisplay());
             Assert.AreEqual("EXACT CHANGE ONLY", vendingMachine.checkDisplay());
         }
+
+        [TestMethod]
+        public void MachineReturnsCorrectAmountOfMoneyWhenReturnCoinsButtonIsPressed()
+        {
+            vendingMachine.insertCoin("quarter");
+            vendingMachine.insertCoin("dime");
+            vendingMachine.insertCoin("nickel");
+            vendingMachine.returnCoins();
+            Assert.AreEqual("Retrieved 1 quarters, 1 dimes, and 1 nickels", vendingMachine.checkCoinReturn());
+        }
     }
 }

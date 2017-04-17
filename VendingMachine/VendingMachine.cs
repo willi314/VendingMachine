@@ -190,5 +190,10 @@ namespace PillarVendingMachine
             invalidObjectsInCoinReturn = "";
             return coinReturnString;
         }
+
+        public void returnCoins()
+        {
+            returnCoins(insertedCurrencyCount);
+        }
     }
 }
